@@ -1,0 +1,18 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfvars
+crash.log
+
+# Ignore large binaries
+*.exe
+*.zip
+*.tar.gz
+
+# Maven
+target/
+
+# Logs
+*.log
