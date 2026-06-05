@@ -35,15 +35,12 @@ pipeline {
         stage('File System Scan') {
             steps {
                 sh '''
-           # Create a local bin directory and add it to PATH
-            mkdir -p $HOME/bin
+           mkdir -p $HOME/bin
             export PATH=$HOME/bin:$PATH
             
-            # Install Trivy to user-writable location
-            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.71.0
             
-            # Run the scan
-            trivy fs --format table -o trivy-fs-report.html
+            trivy fs --format table -o trivy-fs-report.html .
            '''
                 // sh "trivy fs --format table -o trivy-fs-report.html ."
             }
