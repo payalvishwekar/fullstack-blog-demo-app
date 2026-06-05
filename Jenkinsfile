@@ -34,7 +34,14 @@ pipeline {
         
         stage('File System Scan') {
             steps {
-                sh "trivy fs --format table -o trivy-fs-report.html ."
+                sh '''
+            # Install Trivy (latest version)
+            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+            
+            # Run the scan
+            trivy fs --format table -o trivy-fs-report.html .
+           '''
+                // sh "trivy fs --format table -o trivy-fs-report.html ."
             }
         }
         
