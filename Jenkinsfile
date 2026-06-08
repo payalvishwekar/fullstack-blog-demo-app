@@ -79,9 +79,9 @@ pipeline {
             globalMavenSettingsConfig: 'maven-global-settings',
             mavenSettingsConfig: '',   // optional
             credentialsId: 'nexus-cred'   // ← This injects credentials securely
-        ) {
-            sh 'mvn deploy'
-        }
+        ) 
+            sh "mvn deploy"
+        
                 }
             }
         }
