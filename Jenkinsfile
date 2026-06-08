@@ -71,8 +71,12 @@ pipeline {
         
         stage('Publish To Nexus') {
             steps {
-                withMaven(globalMavenSettingsConfig: 'global-settings', jdk: 'jdk17', maven: 'maven3') {
-                    sh "mvn deploy"
+                withMaven(
+                  maven: 'maven3',
+                  globalMavenSettingsConfig: '67a1499b-9e05-4201-bbe2-346a356c1c96',  // ID of the config file above
+                  jdk: 'jdk17'
+                  ) {
+                 sh 'mvn deploy -Dmaven.wagon.http.ssl.insecure=true'
                 }
             }
         }
