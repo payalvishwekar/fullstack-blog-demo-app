@@ -71,8 +71,17 @@ pipeline {
         
         stage('Publish To Nexus') {
             steps {
-                withMaven(globalMavenSettingsConfig: 'global-settings', jdk: 'jdk17', maven: 'maven3') {
-                    sh "mvn deploy"
+                // withMaven(globalMavenSettingsConfig: 'global-settings', jdk: 'jdk17', maven: 'maven3') {
+                //     sh "mvn deploy"
+                withMaven(
+            maven: 'maven3',
+            jdk: 'jdk17',
+            globalMavenSettingsConfig: 'maven-global-settings',
+            mavenSettingsConfig: '',   // optional
+            credentialsId: 'nexus-cred'   // ← This injects credentials securely
+        ) {
+            sh 'mvn deploy'
+        }
                 }
             }
         }
