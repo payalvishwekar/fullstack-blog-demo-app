@@ -123,12 +123,9 @@ pipeline {
         stage('Deploy To Kubernetes') {
         steps {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
-            sh '''
-                // cp $KUBECONFIG kubeconfig.yaml
-                // export KUBECONFIG=kubeconfig.yaml
-                
+            sh '''                
                 kubectl apply -f deployment-service.yml
-                sleep 15
+                sleep 20
                 kubectl get pods
                 kubectl get svc
             '''
