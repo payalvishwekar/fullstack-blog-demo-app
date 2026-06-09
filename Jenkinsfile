@@ -104,22 +104,22 @@ pipeline {
             }
         }
         
-        stage('Deploy To Kubernetes') {
-            steps {
-                withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
-                    sh "kubectl apply -f deployment-service.yaml"
-                }
-            }
-        }
+        // stage('Deploy To Kubernetes') {
+        //     steps {
+        //         withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
+        //             sh "kubectl apply -f deployment-service.yaml"
+        //         }
+        //     }
+        // }
         
-        stage('Verify Deployment') {
-            steps {
-                withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
-                    sh "kubectl get pods -n default"
-                    sh "kubectl get svc -n default"
-                }
-            }
-        }
+        // stage('Verify Deployment') {
+        //     steps {
+        //         withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
+        //             sh "kubectl get pods -n default"
+        //             sh "kubectl get svc -n default"
+        //         }
+        //     }
+        // }
         stage('Deploy To Kubernetes') {
         steps {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
@@ -134,7 +134,15 @@ pipeline {
             '''
         }
     }
-}
+}       
+        stage('Verify Deployment') {
+            steps {
+                withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
+                    sh "kubectl get pods -n default"
+                    sh "kubectl get svc -n default"
+                }
+            }
+        }
     }
     
     post {
