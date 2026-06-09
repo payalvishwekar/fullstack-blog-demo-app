@@ -104,13 +104,13 @@ pipeline {
             }
         }
         
-        // stage('Deploy To Kubernetes') {
-        //     steps {
-        //         withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
-        //             sh "kubectl apply -f deployment-service.yaml"
-        //         }
-        //     }
-        // }
+        stage('Deploy To Kubernetes') {
+            steps {
+                withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
+                    sh "kubectl apply -f deployment-service.yaml"
+                }
+            }
+        }
         
         stage('Verify Deployment') {
             steps {
