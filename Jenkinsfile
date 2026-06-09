@@ -32,30 +32,30 @@ pipeline {
             }
         }
         
-        stage('File System Scan') {
-            steps {
-                sh '''
-           mkdir -p $HOME/bin
-            export PATH=$HOME/bin:$PATH
+        // stage('File System Scan') {
+        //     steps {
+        //         sh '''
+        //    mkdir -p $HOME/bin
+        //     export PATH=$HOME/bin:$PATH
             
-            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.71.0
+        //     curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $HOME/bin v0.71.0
             
-            trivy fs --format table -o trivy-fs-report.html .
-           '''
-                // sh "trivy fs --format table -o trivy-fs-report.html ."
-            }
-        }
+        //     trivy fs --format table -o trivy-fs-report.html .
+        //    '''
+        //         // sh "trivy fs --format table -o trivy-fs-report.html ."
+        //     }
+        // }
         
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner \
-                          -Dsonar.projectName=bloggingapp \
-                          -Dsonar.projectKey=bloggingapp \
-                          -Dsonar.java.binaries=.'''
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonar') {
+        //             sh '''$SCANNER_HOME/bin/sonar-scanner \
+        //                   -Dsonar.projectName=bloggingapp \
+        //                   -Dsonar.projectKey=bloggingapp \
+        //                   -Dsonar.java.binaries=.'''
+        //         }
+        //     }
+        // }
         
         // stage('Quality Gate') {
         //     steps {
@@ -69,14 +69,14 @@ pipeline {
             }
         }
         
-        stage('Publish To Nexus') {
-            steps {
-                withMaven(globalMavenSettingsConfig: 'maven-global-settings', jdk: 'jdk17', maven: 'maven3') {
-                    sh "mvn clean deploy"
+        // stage('Publish To Nexus') {
+        //     steps {
+        //         withMaven(globalMavenSettingsConfig: 'maven-global-settings', jdk: 'jdk17', maven: 'maven3') {
+        //             sh "mvn clean deploy"
         
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         
         stage('Build & Tag Docker Image') {
             steps {
@@ -123,7 +123,8 @@ pipeline {
         stage('Deploy To Kubernetes') {
         steps {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
-            sh '''                
+            sh '''
+                aws sts get-caller-identity
                 kubectl apply -f deployment-service.yml
                 sleep 20
                 kubectl get pods
