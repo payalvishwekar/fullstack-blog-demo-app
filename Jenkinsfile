@@ -133,14 +133,14 @@ pipeline {
         }
     }
 }       
-        stage('Verify Deployment') {
-            steps {
-                withKubeConfig(credentialsId: 'k8s-token', clusterName: 'my-blog-cluster') {
-                    sh "kubectl get pods -n default"
-                    sh "kubectl get svc -n default"
-                }
-            }
-        }
+        // stage('Verify Deployment') {
+        //     steps {
+        //         withKubeConfig(credentialsId: 'k8s-config', clusterName: 'my-blog-cluster') {
+        //             sh "kubectl get pods -n default"
+        //             sh "kubectl get svc -n default"
+        //         }
+        //     }
+        // }
     }
     
     post {
