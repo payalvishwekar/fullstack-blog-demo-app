@@ -124,8 +124,8 @@ pipeline {
         steps {
         withCredentials([file(credentialsId: 'k8s-config', variable: 'KUBECONFIG')]) {
             sh '''
-                cp $KUBECONFIG kubeconfig.yaml
-                export KUBECONFIG=kubeconfig.yaml
+                // cp $KUBECONFIG kubeconfig.yaml
+                // export KUBECONFIG=kubeconfig.yaml
                 
                 kubectl apply -f deployment-service.yml
                 sleep 15
