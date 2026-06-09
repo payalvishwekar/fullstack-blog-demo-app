@@ -127,7 +127,7 @@ pipeline {
                 cp $KUBECONFIG kubeconfig.yaml
                 export KUBECONFIG=kubeconfig.yaml
                 
-                kubectl apply -f deployment-service.yaml
+                kubectl apply -f deployment-service.yml
                 sleep 15
                 kubectl get pods
                 kubectl get svc
